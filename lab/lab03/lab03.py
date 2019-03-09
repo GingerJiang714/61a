@@ -14,6 +14,15 @@ def gcd(a, b):
     40
     """
     "*** YOUR CODE HERE ***"
+    if a < b:
+        return gcd(b,a);
+    if b==1:
+        return 1
+    elif a%b == 0:
+        return b
+    else:
+        return gcd(b, a%b)
+
 
 def hailstone(n):
     """Print out the hailstone sequence starting at n, and return the
@@ -31,3 +40,14 @@ def hailstone(n):
     7
     """
     "*** YOUR CODE HERE ***"
+    print(n)
+    if n==1:
+        return 1
+    elif n%2 ==0:
+        return 1+hailstone(n//2)
+    else:
+        return 1+ hailstone(3*n+1)
+
+
+
+
