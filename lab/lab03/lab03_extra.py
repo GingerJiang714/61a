@@ -31,6 +31,23 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    def g(n):
+        def f(x):
+            if n == 0:
+                return x
+            i = 1
+            while i<=n :
+                if i % 3 == 1:
+                    x = f1(x)
+                elif i % 3 == 2:
+                    x = f2(x)
+                else:
+                    x = f3(x)
+                i+=1
+            return x
+        return f
+    return g
+
 
 ## Lambda expressions
 
@@ -49,9 +66,9 @@ def is_palindrome(n):
     True
     """
     x, y = n, 0
-    f = lambda: _____
+    f = lambda: y*10+x%10
     while x > 0:
-        x, y = _____, f()
+        x, y = x//10, f()
     return y == n
 
 ## More recursion practice
@@ -64,7 +81,9 @@ def skip_mul(n):
     >>> skip_mul(8) # 8 * 6 * 4 * 2
     384
     """
-    if n == 2:
+    if n<=1:
+        return 1
+    elif n == 2:
         return 2
     else:
         return n * skip_mul(n - 2)
@@ -80,6 +99,19 @@ def is_prime(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n<=1 :
+        return False
+    def recursive_checking(i):
+        if i>=n:
+            return True
+        else:
+            if n%i == 0:
+                return False
+            else:
+                return recursive_checking(i+1)
+
+    return recursive_checking(2)    
+    
 
 def interleaved_sum(n, odd_term, even_term):
     """Compute the sum odd_term(1) + even_term(2) + odd_term(3) + ..., up
@@ -90,6 +122,25 @@ def interleaved_sum(n, odd_term, even_term):
     29
     """
     "*** YOUR CODE HERE ***"
+    def helper(i):
+        if n == i and i % 2 == 0:
+            return even_term(n)
+        elif n == i and i % 2 != 0:
+            return odd_term(n)
+        elif i % 2 == 0:
+            return even_term(i) + helper(i + 1)
+        elif i % 2 != 0:
+            return odd_term(i) + helper(i + 1)
+
+    return helper(1)
+
+def find_pairup_in_rest (rest, pairup):
+    if rest == 0:
+        return 0
+    if rest%10 == pairup:
+        return 1+ find_pairup_in_rest(rest//10, pairup)
+    else:
+        return find_pairup_in_rest(rest//10,pairup)
 
 def ten_pairs(n):
     """Return the number of ten-pairs within positive integer n.
@@ -102,3 +153,12 @@ def ten_pairs(n):
     6
     """
     "*** YOUR CODE HERE ***"
+    if n == 0:
+        return 0
+    else:
+        last = n % 10
+        rest = n // 10
+        pairup = 10 - last
+        return find_pairup_in_rest(rest, pairup)+ten_pairs(rest)
+
+
